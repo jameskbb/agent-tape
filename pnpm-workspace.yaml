@@ -1,0 +1,5 @@
+packages:
+  - frontend
+  - e2e
+minimumReleaseAgeExclude:
+  - prettier@3.9.9

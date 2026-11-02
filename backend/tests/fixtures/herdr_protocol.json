@@ -1,0 +1,789 @@
+{
+ "about": "Captured from a real Herdr server (isolated named session); the fake server and the client are checked against it in tests/unit/test_herdr_client.py.",
+ "herdr_version": "0.9.0",
+ "protocol": 22,
+ "schema": {
+  "methods": [
+   "agent.explain",
+   "agent.focus",
+   "agent.get",
+   "agent.list",
+   "agent.prompt",
+   "agent.read",
+   "agent.rename",
+   "agent.send_keys",
+   "agent.start",
+   "agent.view.clear",
+   "agent.view.set",
+   "agent.wait",
+   "client.window_title.clear",
+   "client.window_title.set",
+   "client_shell.surface.set",
+   "command.invoke",
+   "events.subscribe",
+   "events.wait",
+   "integration.install",
+   "integration.list",
+   "integration.uninstall",
+   "layout.apply",
+   "layout.export",
+   "layout.set_split_ratio",
+   "notification.show",
+   "pane.clear_agent_authority",
+   "pane.close",
+   "pane.copy_motion",
+   "pane.copy_search",
+   "pane.current",
+   "pane.edges",
+   "pane.edit_scrollback",
+   "pane.focus",
+   "pane.focus_direction",
+   "pane.get",
+   "pane.graphics.clear",
+   "pane.graphics.info",
+   "pane.graphics.set",
+   "pane.input.set",
+   "pane.layout",
+   "pane.link.activate",
+   "pane.list",
+   "pane.move",
+   "pane.neighbor",
+   "pane.process_info",
+   "pane.read",
+   "pane.release_agent",
+   "pane.rename",
+   "pane.report_agent",
+   "pane.report_agent_session",
+   "pane.report_metadata",
+   "pane.resize",
+   "pane.scroll",
+   "pane.selection.read",
+   "pane.send_input",
+   "pane.send_keys",
+   "pane.send_text",
+   "pane.split",
+   "pane.swap",
+   "pane.wait_for_output",
+   "pane.zoom",
+   "ping",
+   "plugin.action.invoke",
+   "plugin.action.list",
+   "plugin.disable",
+   "plugin.enable",
+   "plugin.link",
+   "plugin.list",
+   "plugin.log.list",
+   "plugin.pane.close",
+   "plugin.pane.focus",
+   "plugin.pane.open",
+   "plugin.unlink",
+   "popup.close",
+   "product_announcement.dismiss",
+   "release_notes.dismiss",
+   "server.agent_manifests",
+   "server.live_handoff",
+   "server.reload_agent_manifests",
+   "server.reload_config",
+   "server.stop",
+   "session.snapshot",
+   "tab.close",
+   "tab.create",
+   "tab.focus",
+   "tab.get",
+   "tab.list",
+   "tab.move",
+   "tab.rename",
+   "workspace.close",
+   "workspace.create",
+   "workspace.focus",
+   "workspace.get",
+   "workspace.list",
+   "workspace.move",
+   "workspace.move_block",
+   "workspace.rename",
+   "workspace.report_metadata",
+   "worktree.create",
+   "worktree.list",
+   "worktree.open",
+   "worktree.remove"
+  ],
+  "AgentInfo": {
+   "properties": [
+    "agent",
+    "agent_session",
+    "agent_status",
+    "cwd",
+    "display_agent",
+    "focused",
+    "foreground_cwd",
+    "interactive_ready",
+    "launch_pending",
+    "name",
+    "pane_id",
+    "revision",
+    "screen_detection_skipped",
+    "state_change_seq",
+    "state_labels",
+    "tab_id",
+    "terminal_id",
+    "terminal_title",
+    "terminal_title_stripped",
+    "title",
+    "tokens",
+    "workspace_id"
+   ],
+   "required": [
+    "agent_status",
+    "focused",
+    "pane_id",
+    "revision",
+    "tab_id",
+    "terminal_id",
+    "workspace_id"
+   ]
+  },
+  "AgentSessionInfo": {
+   "properties": [
+    "agent",
+    "kind",
+    "source",
+    "value"
+   ],
+   "required": [
+    "agent",
+    "kind",
+    "source",
+    "value"
+   ]
+  },
+  "PaneInfo": {
+   "properties": [
+    "agent",
+    "agent_session",
+    "agent_status",
+    "cwd",
+    "display_agent",
+    "focused",
+    "foreground_cwd",
+    "label",
+    "pane_id",
+    "revision",
+    "scroll",
+    "state_labels",
+    "tab_id",
+    "terminal_id",
+    "terminal_title",
+    "terminal_title_stripped",
+    "title",
+    "tokens",
+    "workspace_id"
+   ],
+   "required": [
+    "agent_status",
+    "focused",
+    "pane_id",
+    "revision",
+    "tab_id",
+    "terminal_id",
+    "workspace_id"
+   ]
+  },
+  "AgentStatus": [
+   "idle",
+   "working",
+   "blocked",
+   "done",
+   "unknown"
+  ]
+ },
+ "exchanges": [
+  {
+   "request": {
+    "id": "agenttape:1",
+    "method": "ping",
+    "params": {}
+   },
+   "response": {
+    "id": "agenttape:1",
+    "result": {
+     "type": "pong",
+     "version": "0.9.0",
+     "protocol": 22,
+     "capabilities": {
+      "live_handoff": true,
+      "detached_server_daemon": false,
+      "endpoint_protocol_generation": 1,
+      "surface_interest": true,
+      "health_check": true
+     }
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:2",
+    "method": "workspace.create",
+    "params": {
+     "cwd": "/tmp/herdr-fixture",
+     "label": "agenttape fixture",
+     "focus": false
+    }
+   },
+   "response": {
+    "id": "agenttape:2",
+    "result": {
+     "type": "workspace_created",
+     "workspace": {
+      "workspace_id": "w1",
+      "number": 1,
+      "label": "agenttape fixture",
+      "focused": true,
+      "pane_count": 1,
+      "tab_count": 1,
+      "active_tab_id": "w1:t1",
+      "agent_status": "unknown"
+     },
+     "tab": {
+      "tab_id": "w1:t1",
+      "workspace_id": "w1",
+      "number": 1,
+      "label": "1",
+      "focused": true,
+      "pane_count": 1,
+      "agent_status": "unknown"
+     },
+     "root_pane": {
+      "pane_id": "w1:p1",
+      "terminal_id": "term_65c33a58ed2b31",
+      "workspace_id": "w1",
+      "tab_id": "w1:t1",
+      "focused": true,
+      "cwd": "/tmp/herdr-fixture",
+      "foreground_cwd": "/tmp/herdr-fixture",
+      "agent_status": "unknown",
+      "scroll": {
+       "offset_from_bottom": 0,
+       "max_offset_from_bottom": 0,
+       "viewport_rows": 40
+      },
+      "revision": 0
+     }
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:3",
+    "method": "tab.create",
+    "params": {
+     "workspace_id": "w1",
+     "cwd": "/tmp/herdr-fixture",
+     "label": "agenttape tab",
+     "focus": false
+    }
+   },
+   "response": {
+    "id": "agenttape:3",
+    "result": {
+     "type": "tab_created",
+     "tab": {
+      "tab_id": "w1:t2",
+      "workspace_id": "w1",
+      "number": 2,
+      "label": "agenttape tab",
+      "focused": false,
+      "pane_count": 1,
+      "agent_status": "unknown"
+     },
+     "root_pane": {
+      "pane_id": "w1:p2",
+      "terminal_id": "term_65c33a58edb882",
+      "workspace_id": "w1",
+      "tab_id": "w1:t2",
+      "focused": false,
+      "cwd": "/tmp/herdr-fixture",
+      "foreground_cwd": "/tmp/herdr-fixture",
+      "agent_status": "unknown",
+      "scroll": {
+       "offset_from_bottom": 0,
+       "max_offset_from_bottom": 0,
+       "viewport_rows": 40
+      },
+      "revision": 0
+     }
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:4",
+    "method": "pane.get",
+    "params": {
+     "pane_id": "w1:p1"
+    }
+   },
+   "response": {
+    "id": "agenttape:4",
+    "result": {
+     "type": "pane_info",
+     "pane": {
+      "pane_id": "w1:p1",
+      "terminal_id": "term_65c33a58ed2b31",
+      "workspace_id": "w1",
+      "tab_id": "w1:t1",
+      "focused": true,
+      "cwd": "/tmp/herdr-fixture",
+      "foreground_cwd": "/tmp/herdr-fixture",
+      "agent_status": "unknown",
+      "scroll": {
+       "offset_from_bottom": 0,
+       "max_offset_from_bottom": 0,
+       "viewport_rows": 40
+      },
+      "revision": 0
+     }
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:5",
+    "method": "pane.report_agent",
+    "params": {
+     "pane_id": "w1:p1",
+     "source": "agenttape",
+     "agent": "agenttape-demo",
+     "state": "working",
+     "message": "AgentTape run 12345678"
+    }
+   },
+   "response": {
+    "id": "agenttape:5",
+    "result": {
+     "type": "ok"
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:6",
+    "method": "agent.get",
+    "params": {
+     "target": "w1:p1"
+    }
+   },
+   "response": {
+    "id": "agenttape:6",
+    "result": {
+     "type": "agent_info",
+     "agent": {
+      "terminal_id": "term_65c33a58ed2b31",
+      "agent": "agenttape-demo",
+      "agent_status": "working",
+      "workspace_id": "w1",
+      "tab_id": "w1:t1",
+      "pane_id": "w1:p1",
+      "focused": true,
+      "state_change_seq": 1,
+      "cwd": "/tmp/herdr-fixture",
+      "foreground_cwd": "/tmp/herdr-fixture",
+      "revision": 0
+     }
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:7",
+    "method": "pane.report_agent",
+    "params": {
+     "pane_id": "w1:p1",
+     "source": "agenttape",
+     "agent": "agenttape-demo",
+     "state": "blocked",
+     "message": "Waiting for approval in AgentTape"
+    }
+   },
+   "response": {
+    "id": "agenttape:7",
+    "result": {
+     "type": "ok"
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:8",
+    "method": "agent.get",
+    "params": {
+     "target": "w1:p1"
+    }
+   },
+   "response": {
+    "id": "agenttape:8",
+    "result": {
+     "type": "agent_info",
+     "agent": {
+      "terminal_id": "term_65c33a58ed2b31",
+      "agent": "agenttape-demo",
+      "agent_status": "blocked",
+      "workspace_id": "w1",
+      "tab_id": "w1:t1",
+      "pane_id": "w1:p1",
+      "focused": true,
+      "state_change_seq": 2,
+      "cwd": "/tmp/herdr-fixture",
+      "foreground_cwd": "/tmp/herdr-fixture",
+      "revision": 0
+     }
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:9",
+    "method": "pane.send_text",
+    "params": {
+     "pane_id": "w1:p1",
+     "text": "echo agenttape-fixture\r"
+    }
+   },
+   "response": {
+    "id": "agenttape:9",
+    "result": {
+     "type": "ok"
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:10",
+    "method": "pane.read",
+    "params": {
+     "pane_id": "w1:p1",
+     "source": "recent_unwrapped",
+     "lines": 5
+    }
+   },
+   "response": {
+    "id": "agenttape:10",
+    "result": {
+     "type": "pane_read",
+     "read": {
+      "pane_id": "w1:p1",
+      "workspace_id": "w1",
+      "tab_id": "w1:t1",
+      "source": "recent_unwrapped",
+      "format": "text",
+      "text": "echo agenttape-fixture\nuser@host:/tmp/herdr-fixture$ echo agenttape-fixture\nagenttape-fixture\nuser@host:/tmp/herdr-fixture$",
+      "revision": 0,
+      "truncated": true
+     }
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:11",
+    "method": "pane.send_keys",
+    "params": {
+     "pane_id": "w1:p1",
+     "keys": [
+      "ctrl+c"
+     ]
+    }
+   },
+   "response": {
+    "id": "agenttape:11",
+    "result": {
+     "type": "ok"
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:12",
+    "method": "agent.list",
+    "params": {}
+   },
+   "response": {
+    "id": "agenttape:12",
+    "result": {
+     "type": "agent_list",
+     "agents": [
+      {
+       "terminal_id": "term_65c33a58ed2b31",
+       "agent": "agenttape-demo",
+       "terminal_title": "user@host: /tmp/herdr-fixture",
+       "terminal_title_stripped": "user@host: /tmp/herdr-fixture",
+       "agent_status": "blocked",
+       "workspace_id": "w1",
+       "tab_id": "w1:t1",
+       "pane_id": "w1:p1",
+       "focused": true,
+       "state_change_seq": 2,
+       "cwd": "/tmp/herdr-fixture",
+       "foreground_cwd": "/tmp/herdr-fixture",
+       "revision": 1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:13",
+    "method": "integration.list",
+    "params": {}
+   },
+   "response": {
+    "id": "agenttape:13",
+    "result": {
+     "type": "integration_list",
+     "integrations": [
+      {
+       "target": "pi",
+       "label": "pi",
+       "command": "pi",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "omp",
+       "label": "omp",
+       "command": "omp",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "claude",
+       "label": "claude",
+       "command": "claude",
+       "available": true,
+       "state": "current"
+      },
+      {
+       "target": "codex",
+       "label": "codex",
+       "command": "codex",
+       "available": true,
+       "state": "current"
+      },
+      {
+       "target": "copilot",
+       "label": "copilot",
+       "command": "copilot",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "devin",
+       "label": "devin",
+       "command": "devin",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "droid",
+       "label": "droid",
+       "command": "droid",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "kimi",
+       "label": "kimi",
+       "command": "kimi",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "opencode",
+       "label": "opencode",
+       "command": "opencode",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "kilo",
+       "label": "kilo",
+       "command": "kilo",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "hermes",
+       "label": "hermes",
+       "command": "hermes",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "qodercli",
+       "label": "qodercli",
+       "command": "qodercli",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "qwen",
+       "label": "qwen",
+       "command": "qwen",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "cursor",
+       "label": "cursor",
+       "command": "cursor-agent",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "mastracode",
+       "label": "mastracode",
+       "command": "mastracode",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "antigravity_cli",
+       "label": "antigravity-cli",
+       "command": "agy",
+       "available": false,
+       "state": "not_installed"
+      },
+      {
+       "target": "grok",
+       "label": "grok",
+       "command": "grok",
+       "available": false,
+       "state": "not_installed"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:14",
+    "method": "agent.get",
+    "params": {
+     "target": "w999:p9"
+    }
+   },
+   "response": {
+    "id": "agenttape:14",
+    "error": {
+     "code": "agent_not_found",
+     "message": "agent target w999:p9 not found"
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:15",
+    "method": "pane.get",
+    "params": {
+     "pane_id": "w999:p9"
+    }
+   },
+   "response": {
+    "id": "agenttape:15",
+    "error": {
+     "code": "pane_not_found",
+     "message": "pane w999:p9 not found"
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:16",
+    "method": "agent.get",
+    "params": {
+     "target": "no-such-agent"
+    }
+   },
+   "response": {
+    "id": "agenttape:16",
+    "error": {
+     "code": "agent_not_found",
+     "message": "agent target no-such-agent not found"
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:17",
+    "method": "nope.method",
+    "params": {}
+   },
+   "response": {
+    "id": "",
+    "error": {
+     "code": "invalid_request",
+     "message": "invalid request: unknown variant `nope.method`, expected one of `ping`, `server.stop`, `server.live_handoff`, `server...."
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:18",
+    "method": "tab.close",
+    "params": {
+     "tab_id": "w1:t2"
+    }
+   },
+   "response": {
+    "id": "agenttape:18",
+    "result": {
+     "type": "ok"
+    }
+   }
+  },
+  {
+   "request": {
+    "id": "agenttape:19",
+    "method": "workspace.close",
+    "params": {
+     "workspace_id": "w1"
+    }
+   },
+   "response": {
+    "id": "agenttape:19",
+    "result": {
+     "type": "ok"
+    }
+   }
+  }
+ ],
+ "subscription": {
+  "request": {
+   "id": "agenttape:sub",
+   "method": "events.subscribe",
+   "params": {
+    "subscriptions": [
+     {
+      "type": "pane.agent_status_changed",
+      "pane_id": "w1:p1"
+     }
+    ]
+   }
+  },
+  "ack": {
+   "id": "agenttape:sub",
+   "result": {
+    "type": "subscription_started"
+   }
+  },
+  "event": {
+   "data": {
+    "agent": "agenttape-demo",
+    "agent_status": "blocked",
+    "pane_id": "w1:p1",
+    "workspace_id": "w1"
+   },
+   "event": "pane.agent_status_changed"
+  }
+ }
+}

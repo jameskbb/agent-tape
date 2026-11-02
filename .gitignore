@@ -1,0 +1,59 @@
+# Secrets and local config
+.env
+.env.*
+!.env.example
+
+# Per-machine planning state
+.planning/
+.gsd/
+
+# Local notes and tooling (kept per machine, never published)
+/CLAUDE.md
+/AGENTS.md
+/docs/BRIEF.md
+/.claude/
+/.impeccable/
+
+# Local image tooling (kept per machine; the finished images ship)
+/docs/src/
+/scripts/screenshots.sh
+/e2e/screenshots/
+/e2e/screenshots.config.ts
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# Node / frontend
+node_modules/
+frontend/dist/
+backend/src/agenttape/web_dist/
+.vite/
+coverage/
+playwright-report/
+test-results/
+e2e/.auth/
+
+# AgentTape runtime data
+.agenttape/
+data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.log
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.tsbuildinfo

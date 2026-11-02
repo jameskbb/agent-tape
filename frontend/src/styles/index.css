@@ -1,0 +1,244 @@
+@import "@fontsource-variable/instrument-sans";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "tailwindcss";
+
+/*
+ * AgentTape design tokens.
+ * Cool instrument-panel neutrals, "tape blue" for interaction, and recorder orange used
+ * only to mean "live / recording". Components read these variables; Tailwind utilities
+ * are mapped onto them in @theme below so both stay in sync.
+ */
+:root,
+[data-theme="light"] {
+  --paper: #eef1f5;
+  --surface: #ffffff;
+  --surface-sunken: #f5f7fa;
+  --surface-raised: #ffffff;
+  --ink: #15202d;
+  --ink-soft: #33414f;
+  --muted: #5b6b7d;
+  --faint: #5f6e80;
+  --line: #d6dde6;
+  --line-strong: #b9c4d1;
+  --accent: #2f4bd1;
+  --accent-ink: #ffffff;
+  --accent-soft: #e6ebfc;
+  --live: #b8460c;
+  --live-soft: #fde8dc;
+  --focus: #2f4bd1;
+
+  --st-queued: #5b6b7d;
+  --st-queued-bg: #e9edf2;
+  --st-preparing: #2f6fb8;
+  --st-preparing-bg: #e2eefa;
+  --st-running: #2f4bd1;
+  --st-running-bg: #e6ebfc;
+  --st-waiting: #7a3fc4;
+  --st-waiting-bg: #f1e8fb;
+  --st-cancelling: #83500a;
+  --st-cancelling-bg: #fbf0dc;
+  --st-cancelled: #66707c;
+  --st-cancelled-bg: #eceef1;
+  --st-succeeded: #1d7a4b;
+  --st-succeeded-bg: #e0f3e8;
+  --st-failed: #c0322b;
+  --st-failed-bg: #fbe6e4;
+  --st-timed-out: #b4481a;
+  --st-timed-out-bg: #fbe9df;
+  --st-skipped: #7b8591;
+  --st-skipped-bg: #f0f2f4;
+
+  /* Chart tokens (validated with the dataviz palette checker; failed marks are also hatched). */
+  --chart-good: #1d7a4b;
+  --chart-bad: #c0322b;
+  --chart-other: #8494a6;
+  --chart-bar: #2f4bd1;
+  --chart-grid: #e3e8ee;
+
+  --shadow-pop: 0 12px 32px -12px rgb(21 32 45 / 0.28), 0 2px 6px -2px rgb(21 32 45 / 0.12);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --paper: #0d1520;
+  --surface: #142030;
+  --surface-sunken: #101a27;
+  --surface-raised: #1a283a;
+  --ink: #e3e9f1;
+  --ink-soft: #c3cedb;
+  --muted: #8d9db1;
+  --faint: #8394a8;
+  --line: #243448;
+  --line-strong: #34475e;
+  --accent: #8aa2ff;
+  --accent-ink: #0d1520;
+  --accent-soft: #1d2b52;
+  --live: #ff7a3d;
+  --live-soft: #3a2116;
+  --focus: #9fb3ff;
+
+  --st-queued: #9aa8b8;
+  --st-queued-bg: #1d2a3a;
+  --st-preparing: #6eaee8;
+  --st-preparing-bg: #16293d;
+  --st-running: #8aa2ff;
+  --st-running-bg: #1b2750;
+  --st-waiting: #c39bf5;
+  --st-waiting-bg: #2a1e44;
+  --st-cancelling: #e7b25e;
+  --st-cancelling-bg: #3a2c14;
+  --st-cancelled: #9aa3ae;
+  --st-cancelled-bg: #212a35;
+  --st-succeeded: #5fd39a;
+  --st-succeeded-bg: #12301f;
+  --st-failed: #ff8a82;
+  --st-failed-bg: #3c1a1a;
+  --st-timed-out: #ff9c68;
+  --st-timed-out-bg: #3b2114;
+  --st-skipped: #8a95a2;
+  --st-skipped-bg: #1c2530;
+
+  --chart-good: #1c7652;
+  --chart-bad: #e2725c;
+  --chart-other: #66788d;
+  --chart-bar: #8aa2ff;
+  --chart-grid: #22324a;
+
+  --shadow-pop: 0 16px 40px -12px rgb(0 0 0 / 0.6), 0 2px 8px -2px rgb(0 0 0 / 0.4);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: "Instrument Sans Variable", "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-sunken: var(--surface-sunken);
+  --color-raised: var(--surface-raised);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-live: var(--live);
+  --color-live-soft: var(--live-soft);
+
+  /* Type scale (1.2 minor third, 15px base) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.35rem;
+  --text-2xl: 1.62rem;
+  --text-3xl: 1.944rem;
+
+  --radius-control: 6px;
+  --radius-panel: 10px;
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "tnum" 1;
+  }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--paper);
+  }
+  h1,
+  h2,
+  h3 {
+    color: var(--ink);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--accent-soft);
+  }
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@keyframes at-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes at-shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+.at-live-dot {
+  animation: at-pulse 1.4s ease-in-out infinite;
+}
+
+.at-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-sunken) 25%,
+    var(--line) 50%,
+    var(--surface-sunken) 75%
+  );
+  background-size: 200% 100%;
+  animation: at-shimmer 1.6s linear infinite;
+}
+
+/* Greyscale-safe overlays for a cited citation row: stale (warning) and quote-not-found
+   (danger). Reuses the Overview legend's stripe recipe with the verdict's own token. */
+.at-hatch-warning {
+  background-image: repeating-linear-gradient(
+    45deg,
+    color-mix(in srgb, var(--st-cancelling) 22%, transparent) 0 3px,
+    transparent 3px 8px
+  );
+}
+
+.at-hatch-danger {
+  background-image: repeating-linear-gradient(
+    45deg,
+    color-mix(in srgb, var(--st-failed) 22%, transparent) 0 3px,
+    transparent 3px 8px
+  );
+}

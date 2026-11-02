@@ -1,0 +1,9 @@
+{
+  "name": "agenttape-workspace",
+  "private": true,
+  "description": "pnpm workspace for the AgentTape web UI and end-to-end tests",
+  "packageManager": "pnpm@12.4.1",
+  "engines": {
+    "node": ">=22.22"
+  }
+}

@@ -1,0 +1,93 @@
+[project]
+name = "agenttape"
+version = "0.1.0"
+description = "Local-first control plane, flight recorder, scheduler, and orchestrator for AI coding agents"
+authors = [
+    { name = "James", email = "125927975+jameskbb@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.20.0",
+    "croniter>=6.2.4",
+    "fastapi>=0.141.1",
+    "jsonschema>=4.23",
+    "mcp>=2.2.0,<3",
+    "pydantic>=2.13.5",
+    "pydantic-settings>=2.15.0",
+    "sqlalchemy>=2",
+    "sse-starlette>=3.4.11",
+    "typer>=0.27.2",
+    "uvicorn[standard]>=0.53.0",
+    "watchfiles>=1.1",
+]
+
+[project.scripts]
+agenttape = "agenttape.cli.main:main"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.16.8",
+    "types-croniter>=6.2.4.20260711",
+    "types-jsonschema>=4.26.0.20260518",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "S", "PTH", "ASYNC", "T20"]
+ignore = [
+    "S101",   # assert is fine in tests and invariants
+    "S603",   # subprocess calls use argument arrays by design (see ADR 0005)
+    "S607",   # partial executable paths are resolved against an allowlist
+    "S311",   # random is used for jitter, not cryptography
+    "RUF012", # ClassVar annotations on registry classes are explicit where needed
+    "ASYNC109", # adapters take explicit timeout parameters by design
+    "ASYNC240", # short local file-system calls inside coroutines are acceptable
+    "E501",   # the formatter owns line length; long literals are left intact
+    "UP047",  # TypeVar-based generics are kept for readability
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S104", "S105", "S106", "S108", "T20", "PTH", "ASYNC"]
+"src/agenttape/cli/**" = ["T20"]
+"src/agenttape/infrastructure/db/migrations/**" = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unreachable = true
+mypy_path = "src"
+packages = ["agenttape"]
+disallow_any_generics = false
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = ["sse_starlette.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+addopts = "-q --strict-markers"
+markers = [
+    "slow: tests that take more than a couple of seconds",
+]
+filterwarnings = [
+    "error::pytest.PytestUnraisableExceptionWarning",
+    # A crashed helper thread must fail the test that started it (review AR-12).
+    "error::pytest.PytestUnhandledThreadExceptionWarning",
+    # Starlette nudges towards httpx2 for TestClient; httpx works and is what FastAPI documents.
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]

@@ -1,0 +1,33 @@
+# Example Compose setup. The data volume keeps the database, artifacts, and logs across
+# restarts. The container listens on 0.0.0.0 inside its network namespace, so an API
+# token is required; the published port is bound to loopback on the host by default.
+#
+# The image stores everything in SQLite on that volume; it has no PostgreSQL driver.
+#
+#   export AGENTTAPE_API_TOKEN_HASH=$(echo -n "$MY_TOKEN" | uv run --project backend agenttape token hash)
+#   export AGENTTAPE_UID=$(id -u) AGENTTAPE_GID=$(id -g)   # Linux: lets the container use ./repos
+#   mkdir -p repos
+#   docker compose up --build
+services:
+  agenttape:
+    build:
+      context: .
+      args:
+        # Set both to your own ids on Linux so the container can use ./repos.
+        AGENTTAPE_UID: ${AGENTTAPE_UID:-10001}
+        AGENTTAPE_GID: ${AGENTTAPE_GID:-10001}
+    image: agenttape:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8787:8787"
+    environment:
+      AGENTTAPE_API_TOKEN_HASH: ${AGENTTAPE_API_TOKEN_HASH:?Set AGENTTAPE_API_TOKEN_HASH (see docs/DEPLOYMENT.md)}
+      AGENTTAPE_ALLOWED_ROOTS: /repos
+    volumes:
+      - agenttape-data:/data
+      # Repositories AgentTape may run agents in (mounted read-write; the path must match
+      # AGENTTAPE_ALLOWED_ROOTS). Remove this line to use only the built-in demo.
+      - ${AGENTTAPE_REPOS:-./repos}:/repos
+
+volumes:
+  agenttape-data:
