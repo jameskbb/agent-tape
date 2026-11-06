@@ -43,6 +43,7 @@ no_em_dash() {
 }
 
 gate "no em dashes in tracked files" no_em_dash
+gate "CLAUDE.md and AGENTS.md identical" cmp CLAUDE.md AGENTS.md
 gate "backend deps in sync" in_backend uv sync --frozen --quiet
 gate "python format (ruff format --check)" in_backend uv run --frozen ruff format --check .
 gate "python lint (ruff check)" in_backend uv run --frozen ruff check .

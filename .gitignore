@@ -8,10 +8,9 @@
 .gsd/
 
 # Local notes and tooling (kept per machine, never published)
-/CLAUDE.md
-/AGENTS.md
 /docs/BRIEF.md
-/.claude/
+/.claude/settings.local.json
+/.claude/worktrees/
 /.impeccable/
 
 # Local image tooling (kept per machine; the finished images ship)
