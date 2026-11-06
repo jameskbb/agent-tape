@@ -4,6 +4,14 @@
   <img src="docs/images/readme-title-agent-tape.png" alt="AgentTape title card: the app icon and wordmark with the tagline, a recording indicator for one run, and a timeline of six recorded events from the prompt to passing checks" width="100%">
 </p>
 
+<p align="center">
+  <a href="https://github.com/jameskbb/agent-tape/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/jameskbb/agent-tape/ci.yml?branch=main&style=for-the-badge&label=CI&logo=githubactions&logoColor=white"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/jameskbb/agent-tape?style=for-the-badge&label=License&color=blue"></a>
+  <a href="#quick-start"><img alt="Python" src="https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge&logo=python&logoColor=white"></a>
+  <a href="#quick-start"><img alt="Node.js" src="https://img.shields.io/badge/Node.js-22.22%2B-5FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white"></a>
+  <a href="#quick-start"><img alt="Platform" src="https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20WSL2-FCC624?style=for-the-badge&logo=linux&logoColor=black"></a>
+</p>
+
 **Your coding agent reports that the tests already cover this case, and cites two lines
 of a file. Did it read those lines? Do they say that? Do they still?**
 
@@ -63,8 +71,8 @@ tool at version 0.1.0, unreleased, under the MIT license.
 - **Built for one technical person on one machine.** No accounts or roles, so an approval
   or confirmation is attributed only to a self-reported actor name
   ([Trust boundary](#trust-boundary)). A team and remote workers are extension points,
-  not features. SQLite is the default and the database `make check` runs against; Docker
-  and PostgreSQL were checked by hand ([Platform](#platform)).
+  not features. SQLite is the default; PostgreSQL and a Docker image are optional
+  ([Platform](#platform)).
 - **MIT licensed.** See [License](#license).
 - **What is built.** V1 (run engine, recorder, scheduling, workflows, approvals,
   evaluations, replay), M2 (the optional [Herdr](#where-it-fits) terminal runtime, file

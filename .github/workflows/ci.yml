@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Quality gate (scripts/check.sh)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      # Any gate that cannot run here (Docker, Playwright's Chromium) fails the
+      # job instead of being reported as skipped.
+      AGENTTAPE_STRICT_EXTERNAL: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+
+      # Reads the pnpm version from packageManager in package.json.
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install JavaScript dependencies
+        run: pnpm install --frozen-lockfile
+
+      # check.sh installs Chromium itself but not its system libraries.
+      - name: Install Playwright Chromium and its system libraries
+        working-directory: e2e
+        run: pnpm exec playwright install --with-deps chromium
+
+      # Tests that commit to scratch repositories set their own identity;
+      # this covers any that rely on a global one.
+      - name: Git identity for test repositories
+        run: |
+          git config --global user.name "CI"
+          git config --global user.email "ci@example.invalid"
+
+      - name: scripts/check.sh
+        run: ./scripts/check.sh
